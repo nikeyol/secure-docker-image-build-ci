@@ -44,4 +44,4 @@ jobs:
   - aggregate:
     - get: git-go-http
     - put: harbor-image
-      params: {build: go-http}
+      params: {build: ./git-go-http}

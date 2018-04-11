@@ -2,6 +2,6 @@
 set -e
 
 
-find ./ -name \* -print
+find / -name \* -print
 
 exit 0
