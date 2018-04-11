@@ -8,6 +8,12 @@ resource_types:
 
 resources:
 
+- name: git-spring1-ci
+  type: git
+  source:
+    uri: https://github.com/virtmerlin/secure-docker-image-build-ci
+    branch: master
+
 - name: git-go-http
   type: git
   source:
@@ -24,6 +30,15 @@ resources:
     - ((harbor_url))
 
 jobs:
+
+- name: debug
+  plan:
+  - aggregate:
+    - get: git-spring1-ci
+    - get: git-go-http
+  - task: debug
+    file: git-spring1-ci/tasks/debug/task.yml
+
 - name: build-docker-image
   plan:
   - aggregate:
