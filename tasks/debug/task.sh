@@ -3,7 +3,7 @@ set -e
 
 
 #find / -name \* -print
-ls -LR ~/gitroot/
+ls -LR ./
 
 export build="git-go-http"
 
