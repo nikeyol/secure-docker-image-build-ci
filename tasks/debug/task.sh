@@ -13,6 +13,8 @@ export dockerfile="${build}/Dockerfile"
   if [ ! -f "$dockerfile" ]; then
     echo "It doesn't appear that given Dockerfile: \"$dockerfile\" is a file"
     exit 1
+  else
+    echo "Found: $dockerfile"
   fi
 
 exit 0
