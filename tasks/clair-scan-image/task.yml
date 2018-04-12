@@ -10,7 +10,7 @@ params:
   harbor_username: 
   harbor_password:
   harbor_url: 
-  repository:
+  harbor_repository:
 
 inputs:
   - name: secure-docker-image-build-ci

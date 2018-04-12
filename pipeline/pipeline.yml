@@ -57,4 +57,4 @@ jobs:
       harbor_username: ((harbor_username))
       harbor_password: ((harbor_password))
       harbor_url: ((harbor_url))
-      repository: ((harbor_url))/((harbor_image))
+      harbor_repository: ((harbor_image))
