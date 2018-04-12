@@ -7,16 +7,13 @@ image_resource:
   source: {repository: ubuntu}
 
 params:
-  CLAIR_URL:
-  CLAIR_PORT:
-  CLAIR_HEALTH_PORT:
-  CLAIR_IMAGE:
-  CLAIR_INSECURE_REGISTRY:
-  HARBOR_USERNAME:
-  HARBOR_PASSWORD:
+  harbor_username: 
+  harbor_password:
+  harbor_url: 
+  repository:
 
 inputs:
-  - name: git-spring1-ci
+  - name: secure-docker-image-build-ci
 
 run:
-  path: git-spring1-ci/tasks/clair-scan-image/task.sh
+  path: secure-docker-image-build-ci/tasks/clair-scan-image/task.sh

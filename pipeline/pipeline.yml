@@ -6,9 +6,15 @@ resource_types:
   source:
     repository: virtmerlin/concourse-kubernetes-resource
 
+- name: harbor-image
+  privileged: true
+  type: docker-image
+  source:
+    repository: virtmerlin/harbor-image-resource
+
 resources:
 
-- name: git-spring1-ci
+- name: secure-docker-image-build-ci
   type: git
   source:
     uri: https://github.com/virtmerlin/secure-docker-image-build-ci
@@ -20,28 +26,35 @@ resources:
     uri: https://github.com/tkrausjr/go-http
     branch: master
 
-- name: harbor-image
-  type: docker-image
+- name: harbor
+  type: harbor-image
   source:
     username: ((harbor_username))
     password: ((harbor_password))
+    skip_pull: true
     repository: ((harbor_url))/((harbor_image))
     insecure_registries:
     - ((harbor_url))
 
 jobs:
 
-- name: debug
-  plan:
-  - aggregate:
-    - get: git-spring1-ci
-    - get: git-go-http
-  - task: debug
-    file: git-spring1-ci/tasks/debug/task.yml
-
 - name: build-docker-image
   plan:
+  - get: git-go-http
+  - put: harbor
+    params: {build: git-go-http}
+
+- name: cve-report-harbor-image
+  plan:
   - aggregate:
+    - get: secure-docker-image-build-ci
     - get: git-go-http
-    - put: harbor-image
-      params: {build: git-go-http,dockerfile: git-go-http/Dockerfile}
+      passed: [build-docker-image]
+      trigger: true
+  - task: clair-scan-image
+    file: secure-docker-image-build-ci/tasks/clair-scan-image/task.yml
+    params:
+      harbor_username: ((harbor_username))
+      harbor_password: ((harbor_password))
+      harbor_url: ((harbor_url))
+      repository: ((harbor_url))/((harbor_image))
