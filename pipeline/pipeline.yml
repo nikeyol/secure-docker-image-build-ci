@@ -44,4 +44,4 @@ jobs:
   - aggregate:
     - get: git-go-http
     - put: harbor-image
-      params: {build: ./git-go-http}
+      params: {build: git-go-http,dockerfile: git-go-http/Dockerfile}
