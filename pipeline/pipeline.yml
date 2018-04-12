@@ -51,7 +51,7 @@ jobs:
     - get: git-go-http
       passed: [build-docker-image]
       trigger: true
-  - task: clair-scan-image
+  - task: clair-cve-report
     file: secure-docker-image-build-ci/tasks/clair-scan-image/task.yml
     params:
       harbor_username: ((harbor_username))
