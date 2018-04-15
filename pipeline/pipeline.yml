@@ -58,3 +58,5 @@ jobs:
       harbor_password: ((harbor_password))
       harbor_url: ((harbor_url))
       harbor_repository: ((harbor_image))
+      harbor_trigger_scan: ((harbor_trigger_scan))
+      harbor_scan_thresholds="[{\"severity\": 1,\"count\": 10},{\"severity\": 5,\"count\": 1}]"
