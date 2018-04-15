@@ -32,7 +32,7 @@ resources:
     username: ((harbor_username))
     password: ((harbor_password))
     skip_pull: true
-    repository: ((harbor_url))/((harbor_image))
+    repository: ((harbor_host))/((harbor_image))
     insecure_registries:
     - ((harbor_url))
 
@@ -56,7 +56,7 @@ jobs:
     params:
       harbor_username: ((harbor_username))
       harbor_password: ((harbor_password))
-      harbor_url: ((harbor_url))
+      harbor_host: ((harbor_host))
       harbor_repository: ((harbor_image))
       harbor_trigger_scan: ((harbor_trigger_scan))
       harbor_scan_thresholds: ((harbor_scan_thresholds))
