@@ -52,7 +52,7 @@ jobs:
       passed: [build-docker-image]
       trigger: true
   - task: clair-cve-report
-    file: secure-docker-image-build-ci/tasks/clair-scan-image/task.yml
+    file: secure-docker-image-build-ci/tasks/cve-report-harbor-image/task.yml
     params:
       harbor_username: ((harbor_username))
       harbor_password: ((harbor_password))
