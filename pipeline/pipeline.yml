@@ -40,17 +40,17 @@ jobs:
 
 - name: build-docker-image
   plan:
+  - get: secure-docker-image-build-ci
   - get: git-go-http
+    trigger: true
   - put: harbor
     params: {build: git-go-http}
 
 - name: cve-report-harbor-image
   plan:
-  - aggregate:
-    - get: secure-docker-image-build-ci
-    - get: git-go-http
-      passed: [build-docker-image]
-      trigger: true
+  - get: secure-docker-image-build-ci
+    passed: [build-docker-image]
+    trigger: true
   - task: clair-cve-report
     file: secure-docker-image-build-ci/tasks/cve-report-harbor-image/task.yml
     params:
