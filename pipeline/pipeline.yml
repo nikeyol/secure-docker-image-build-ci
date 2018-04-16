@@ -35,6 +35,10 @@ resources:
     repository: ((harbor_host))/((harbor_image))
     insecure_registries:
     - ((harbor_url))
+    notary_enable: ((notary_enable))
+    notary_url: ((notary_url))
+    notary_vault_addr: ((notary_vault_addr))
+    notary_vault_token: ((notary_vault_token))
 
 jobs:
 
