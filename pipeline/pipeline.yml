@@ -34,7 +34,8 @@ resources:
     skip_pull: true
     repository: ((harbor_host))/((harbor_image))
     insecure_registries:
-    - ((harbor_url))
+    - ((harbor_host))
+    harbor_host: ((harbor_host))
     notary_enable: ((notary_enable))
     notary_url: ((notary_url))
     notary_vault_addr: ((notary_vault_addr))
@@ -53,6 +54,7 @@ jobs:
 - name: cve-report-harbor-image
   plan:
   - get: secure-docker-image-build-ci
+  - get: git-go-http
     passed: [build-docker-image]
     trigger: true
   - task: clair-cve-report
