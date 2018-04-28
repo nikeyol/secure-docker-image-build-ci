@@ -11,14 +11,9 @@ resource_types:
   type: docker-image
   source:
     repository: virtmerlin/harbor-image-resource
+    tag: latest
 
 resources:
-
-- name: secure-docker-image-build-ci
-  type: git
-  source:
-    uri: https://github.com/virtmerlin/secure-docker-image-build-ci
-    branch: master
 
 - name: git-go-http
   type: git
@@ -36,6 +31,9 @@ resources:
     insecure_registries:
     - ((harbor_host))
     harbor_host: ((harbor_host))
+    harbor_image: ((harbor_image))
+    harbor_trigger_scan: ((harbor_trigger_scan))
+    harbor_scan_thresholds: ((harbor_scan_thresholds))
     notary_enable: ((notary_enable))
     notary_url: ((notary_url))
     notary_vault_addr: ((notary_vault_addr))
@@ -45,24 +43,8 @@ jobs:
 
 - name: build-docker-image
   plan:
-  - get: secure-docker-image-build-ci
   - get: git-go-http
     trigger: true
   - put: harbor
     params: {build: git-go-http}
 
-- name: cve-report-harbor-image
-  plan:
-  - get: secure-docker-image-build-ci
-  - get: git-go-http
-    passed: [build-docker-image]
-    trigger: true
-  - task: clair-cve-report
-    file: secure-docker-image-build-ci/tasks/cve-report-harbor-image/task.yml
-    params:
-      harbor_username: ((harbor_username))
-      harbor_password: ((harbor_password))
-      harbor_host: ((harbor_host))
-      harbor_repository: ((harbor_image))
-      harbor_trigger_scan: ((harbor_trigger_scan))
-      harbor_scan_thresholds: ((harbor_scan_thresholds))
